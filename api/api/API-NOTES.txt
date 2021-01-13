@@ -1,0 +1,29 @@
+NOTES:
+
+API data retrivals:
+
+Mobiliser details:
+- Retrieving all mobilisers: 
+http://localhost/app/api/api/all_mobilisers.php
+
+- Retrieving mobilisers using a mobiliser_id (which is a record primary key): 
+http://localhost/app/api/api/single_mobiliser.php?mobiliser_id=19
+
+- Retrieving mobilisers using a cellphone number (which is a record primary key): 
+http://localhost/app/api/api/seach_by_cellphone.php?cellnumber=%2b27825561420
+
+NB: Replace '+' with '%2b'
+instead of a + :
+http://localhost/app/api/api/seach_by_cellphone.php?cellnumber=+27825561420
+
+use %2b: 
+http://localhost/app/api/api/seach_by_cellphone.php?cellnumber=%2b27825561420
+
+
+Survey details:
+- Retrieving all mobilisers: 
+http://localhost/app/api/api/all_surveys.php
+
+- Retrieving mobilisers using a mobiliser_id (which is a record primary key): 
+http://localhost/app/api/api/single_survey.php?summary_id=10
+
