@@ -43,14 +43,14 @@
                 <p>Live Data</p>
               </a>
             </li>
-<!--            
+            <!--
             <li>
               <a href="sector-dash.php">
                 <i class="now-ui-icons education_glasses"></i>
                 <p>Sectors</p>
               </a>
             </li>
--->
+            -->
             <li>
               <a href="mobiliser-dash.php">
                 <i class="now-ui-icons sport_user-run"></i>
@@ -79,6 +79,12 @@
               <a href="data-analytics.php">
                 <i class="now-ui-icons business_chart-pie-36"></i>
                 <p>Data Analytics</p>
+              </a>
+            </li>    
+            <li>
+              <a href="respondent-dublicates-details.php">
+                <i class="now-ui-icons loader_refresh"></i>
+                <p>Possible Duplications</p>
               </a>
             </li>            
             <li class="active-pro">
@@ -536,7 +542,7 @@ demo = {
     var a = {
       type: "bar",
       data: {
-        labels: ["Sport, Arts & Culture", "Law & Human Rights", "Traditional Leaders", "People Living with HIV and AIDS", "Faith", "Higher Education", "Sex Workers", "Labour", "Youth", "People with Disabilities", "LGBTIQ+", "Non-Governmental Organisations"],
+        labels: ["Gauteng", "Free State", "North West", "Mpumalanga", "Limpopo", "KwaZulu Natal", "Northern Cape", "Eastern Cape", "Western Cape"],
         datasets: [{
           label: "Sector Representatives",
           backgroundColor: gradientFill,
@@ -549,7 +555,7 @@ demo = {
           pointRadius: 4,
           fill: true,
           borderWidth: 1,
-          data: [<?php echo $sacMobilisers ?>, <?php echo $humanRightsMobilisers ?>, <?php echo $traditionalLeadersMobilisers ?>, <?php echo $plhivMobilisers ?>, <?php echo $faithMobilisers ?>, <?php echo $higerEducationMobilisers ?>, <?php echo $sexWorkerMobilisers ?>, <?php echo $labourMobilisers ?>, <?php echo $youthMobilisers ?>, <?php echo $peopleWithDisabilitiesMobilisers ?>, <?php echo $lgbtiMobilisers ?>, <?php echo $npoMobilisers ?>]
+          data: [<?php echo $gautengMobilisers ?>, <?php echo $freeStateMobilisers ?>, <?php echo $northWestMobilisers ?>, <?php echo $mpumalangaMobilisers ?>, <?php echo $limpopoMobilisers ?>, <?php echo $kznMobilisers ?>, <?php echo $northernCapeMobilisers ?>, <?php echo $easternCapeMobilisers ?>, <?php echo $westernCapeMobilisers ?>]
         }]
       },
       options: {

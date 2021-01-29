@@ -1,6 +1,6 @@
 <?php
 
-include 'connect.php';
+//include 'connectDB.php';
 
 ##########  Dashboard Data (generating graphs) #########
 $sql = " SELECT * FROM summary_tbl WHERE DATE(completed_datetime) between '2020/10/01' and '2020/10/31' ";
@@ -466,7 +466,7 @@ $lgbtiSurveys = mysqli_num_rows($result);
 
 
 $sql = "SELECT * FROM summary_tbl WHERE mobiliser_id IN 
-(SELECT mobiliser_id FROM mobiliser_tbl where net_structure = 'Youth') ";
+(SELECT mobiliser_id FROM mobiliser_tbl where net_structure = 'Youth') ";   
 $result = mysqli_query($db, $sql);
 $youthSurveys = mysqli_num_rows($result);
 
@@ -538,7 +538,8 @@ $labourSurveys = mysqli_num_rows($result);
 
 
 // Stats for yesterday
-$sql = "SELECT count(DISTINCT mobiliser_id) FROM summary_tbl where date(created_date)=CURDATE() - interval 1 day";
+//SELECT count(DISTINCT mobiliser_id) FROM summary_tbl where date(completed_datetime)=CURDATE() - interval 1 day";
+$sql = "SELECT count(DISTINCT mobiliser_id) FROM summary_tbl where date(completed_datetime)=CURDATE() - interval 1 day";
 $result = mysqli_query($db, $sql);
 $numOfActiveAgentsYesterday = mysqli_num_rows($result);
 
@@ -706,27 +707,33 @@ $numOfSexOther = mysqli_num_rows($result);
 //Pronous
 $sql = "SELECT * FROM respondant_contact_tbl where pronouns='He' ";
 $result = mysqli_query($db, $sql);
-$numOfPronounsHe = mysqli_num_rows($result);
+$numOfPronounsHeOld = mysqli_num_rows($result);
 
 $sql = "SELECT * FROM respondant_contact_tbl where pronouns='Him' ";
 $result = mysqli_query($db, $sql);
-$numOfPronounsHim = mysqli_num_rows($result);
+$numOfPronounsHimOld = mysqli_num_rows($result);
+
+$numOfPronounsHimNew = $numOfPronounsHeOld + $numOfPronounsHimOld;
 
 $sql = "SELECT * FROM respondant_contact_tbl where pronouns='They' ";
 $result = mysqli_query($db, $sql);
-$numOfPronounsThey = mysqli_num_rows($result);
+$numOfPronounsTheyOld = mysqli_num_rows($result);
 
 $sql = "SELECT * FROM respondant_contact_tbl where pronouns='Them' ";
 $result = mysqli_query($db, $sql);
-$numOfPronounsThem = mysqli_num_rows($result);
+$numOfPronounsThemOld = mysqli_num_rows($result);
+
+$numOfPronounsThemNew = $numOfPronounsTheyOld + $numOfPronounsThemOld;
 
 $sql = "SELECT * FROM respondant_contact_tbl where pronouns='She' ";
 $result = mysqli_query($db, $sql);
-$numOfPronounsShe = mysqli_num_rows($result);
+$numOfPronounsSheOld = mysqli_num_rows($result);
 
 $sql = "SELECT * FROM respondant_contact_tbl where pronouns='Her' ";
 $result = mysqli_query($db, $sql);
-$numOfPronounsHer = mysqli_num_rows($result);
+$numOfPronounsHerOld = mysqli_num_rows($result);
+
+$numOfPronounsHerNew = $numOfPronounsSheOld + $numOfPronounsHerOld;
 
 $sql = "SELECT * FROM respondant_contact_tbl where pronouns='Other' ";
 $result = mysqli_query($db, $sql);
@@ -758,6 +765,10 @@ $result = mysqli_query($db, $sql);
 $numOfDisabledBrainInjury = mysqli_num_rows($result);
 
 //Employment Status
+$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Student' ";
+$result = mysqli_query($db, $sql);
+$numOfStudent = mysqli_num_rows($result);
+
 $sql = "SELECT * FROM respondant_contact_tbl where employment_status='Employed, working 1-20 hours per week' ";
 $result = mysqli_query($db, $sql);
 $numOfEmployed1to20 = mysqli_num_rows($result);
@@ -782,6 +793,31 @@ $sql = "SELECT * FROM respondant_contact_tbl where employment_status='Disabled, 
 $result = mysqli_query($db, $sql);
 $numOfUnEmployedDisabled = mysqli_num_rows($result);
 
+//Employment Status
+/*$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Employed, working 1-20 hours per week' ";
+$result = mysqli_query($db, $sql);
+$numOfEmployed1to20 = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Employed, working 21 – 40+ or more hours per week' ";
+$result = mysqli_query($db, $sql);
+$numOfEmployed21to40 = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Not employed, looking for work' ";
+$result = mysqli_query($db, $sql);
+$numOfUnEmployedLooking = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Not employed, NOT looking for work' ";
+$result = mysqli_query($db, $sql);
+$numOfUnEmployedNotLooking = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Retired / Pensioner' ";
+$result = mysqli_query($db, $sql);
+$numOfUnEmployedRetired = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Disabled, not able to work' ";
+$result = mysqli_query($db, $sql);
+$numOfUnEmployedDisabled = mysqli_num_rows($result);
+*/
 
 ##########  Data Analysis (respondants table) #########
 // Age brackets
@@ -997,30 +1033,6 @@ $sql = "SELECT * FROM respondant_contact_tbl where disability_type='Acquired bra
 $result = mysqli_query($db, $sql);
 $numOfDisabledBrainInjury = mysqli_num_rows($result);
 
-//Employment Status
-$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Employed, working 1-20 hours per week' ";
-$result = mysqli_query($db, $sql);
-$numOfEmployed1to20 = mysqli_num_rows($result);
-
-$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Employed, working 21 – 40+ or more hours per week' ";
-$result = mysqli_query($db, $sql);
-$numOfEmployed21to40 = mysqli_num_rows($result);
-
-$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Not employed, looking for work' ";
-$result = mysqli_query($db, $sql);
-$numOfUnEmployedLooking = mysqli_num_rows($result);
-
-$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Not employed, NOT looking for work' ";
-$result = mysqli_query($db, $sql);
-$numOfUnEmployedNotLooking = mysqli_num_rows($result);
-
-$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Retired / Pensioner' ";
-$result = mysqli_query($db, $sql);
-$numOfUnEmployedRetired = mysqli_num_rows($result);
-
-$sql = "SELECT * FROM respondant_contact_tbl where employment_status='Disabled, not able to work' ";
-$result = mysqli_query($db, $sql);
-$numOfUnEmployedDisabled = mysqli_num_rows($result);
 
 
 ##########  Data Analysis (module 1 : surviving covid) #########
@@ -1171,9 +1183,9 @@ $result = mysqli_query($db, $sql);
 $numOfTravelLifeStyleChange = mysqli_num_rows($result);
 
 
-$sql = "SELECT * FROM social_behaviour_tbl where other='Yes' ";
-$result = mysqli_query($db, $sql);
-$numOfOtherLifeStyleChange = mysqli_num_rows($result);
+//$sql = "SELECT * FROM social_behaviour_tbl where other='Yes' ";
+//$result = mysqli_query($db, $sql);
+//$numOfOtherLifeStyleChange = mysqli_num_rows($result);
 
 
 $sql = "SELECT * FROM social_behaviour_tbl where family_social_distancing='Yes' ";
@@ -1441,17 +1453,54 @@ $numOfSomewhatSafeWorkplace = mysqli_num_rows($result);
 
 $sql = "SELECT * FROM work_safety_tbl where employer_measures='COVID-19-manager-onsite' ";
 $result = mysqli_query($db, $sql);
-$numOfCOVIDManager = mysqli_num_rows($result);
+$numOfCOVIDManagerOld = mysqli_num_rows($result);
 
+
+$sql = "SELECT * FROM work_safety_tbl where covid_19_manager='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfCOVIDManagerNew = mysqli_num_rows($result);
+
+$numOfCOVIDManager = $numOfCOVIDManagerOld  + $numOfCOVIDManagerNew;
 
 $sql = "SELECT * FROM work_safety_tbl where employer_measures='daily-temperature-checks' ";
 $result = mysqli_query($db, $sql);
-$numOfDailyTemperatureChecks = mysqli_num_rows($result);
+$numOfDailyTemperatureChecksOld = mysqli_num_rows($result);
 
+$sql = "SELECT * FROM work_safety_tbl where daily_temperature='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfDailyTemperatureChecksNew = mysqli_num_rows($result);
+
+$numOfDailyTemperatureChecks = $numOfDailyTemperatureChecksOld + $numOfDailyTemperatureChecksNew;
 
 $sql = "SELECT * FROM work_safety_tbl where employer_measures='changed-policies?' ";
 $result = mysqli_query($db, $sql);
-$numOfChangedPolicies = mysqli_num_rows($result);
+$numOfChangedPoliciesOld = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM work_safety_tbl where changed_policies='yes' ";
+$result = mysqli_query($db, $sql);
+$numOfChangedPoliciesNew = mysqli_num_rows($result);
+
+$numOfChangedPolicies = $numOfChangedPoliciesOld + $numOfChangedPoliciesNew;
+
+$sql = "SELECT * FROM work_safety_tbl where sanitised_at_entry='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfsanitised_at_entry = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM work_safety_tbl where wearing_masks='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfwearing_masks = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM work_safety_tbl where driver_wearing_mask='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfdriver_wearing_mask = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM work_safety_tbl where window_open='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfwindow_open = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM work_safety_tbl where one_space='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfone_space = mysqli_num_rows($result);
 
 
 $sql = "SELECT * FROM work_safety_tbl where workplace_guidelines='Yes' ";
@@ -1576,26 +1625,370 @@ $numOfOtherWorkTravel = mysqli_num_rows($result);
 
 $sql = "SELECT * FROM work_safety_tbl where public_transport='sanitised-at-entry' ";
 $result = mysqli_query($db, $sql);
-$numOfSanitisedAtEntry = mysqli_num_rows($result);
+$numOfSanitisedAtEntryOld = mysqli_num_rows($result);
 
+$sql = "SELECT * FROM work_safety_tbl where sanitised_at_entry='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfSanitisedAtEntryNew = mysqli_num_rows($result);
+
+$numOfSanitisedAtEntry = $numOfSanitisedAtEntryOld + $numOfSanitisedAtEntryNew;
 
 $sql = "SELECT * FROM work_safety_tbl where public_transport='wearing-masks' ";
 $result = mysqli_query($db, $sql);
-$numOfWearingMasks = mysqli_num_rows($result);
+$numOfWearingMasksOld = mysqli_num_rows($result);
 
+$sql = "SELECT * FROM work_safety_tbl where wearing_masks='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfWearingMasksNew = mysqli_num_rows($result);
+
+$numOfWearingMasks = $numOfWearingMasksOld + $numOfWearingMasksNew;
 
 $sql = "SELECT * FROM work_safety_tbl where public_transport='driver-wearing-mask' ";
 $result = mysqli_query($db, $sql);
-$numOfDriverWearingMask = mysqli_num_rows($result);
+$numOfDriverWearingMaskOld = mysqli_num_rows($result);
 
+$sql = "SELECT * FROM work_safety_tbl where driver_wearing_mask='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfDriverWearingMaskNew = mysqli_num_rows($result);
+
+$numOfDriverWearingMask = $numOfDriverWearingMaskOld + $numOfDriverWearingMaskNew;
 
 $sql = "SELECT * FROM work_safety_tbl where public_transport='window-open' ";
 $result = mysqli_query($db, $sql);
-$numOfWindowOpen = mysqli_num_rows($result);
+$numOfWindowOpenOld = mysqli_num_rows($result);
 
+$sql = "SELECT * FROM work_safety_tbl where window_open='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOfWindowOpenNew = mysqli_num_rows($result);
+
+$numOfWindowOpen = $numOfWindowOpenOld + $numOfWindowOpenNew;
+
+$sql = "SELECT * FROM work_safety_tbl where one_space='Yes' ";
+$result = mysqli_query($db, $sql);
+$numOf1SpaceNew = mysqli_num_rows($result);
 
 $sql = "SELECT * FROM work_safety_tbl where public_transport='1-space' ";
 $result = mysqli_query($db, $sql);
-$numOf1Space = mysqli_num_rows($result);
+$numOf1SpaceOld = mysqli_num_rows($result);
+
+$numOf1Space = $numOf1SpaceOld + $numOf1SpaceNew;
+
+// Hygiene MODULE 5 ( wash hands)
+
+$sql = "SELECT * FROM hygiene_tbl where wash_hands='throughout-the-day' ";
+$result = mysqli_query($db, $sql);
+$numOfWashHandsThroughDay = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where wash_hands='daily' ";
+$result = mysqli_query($db, $sql);
+$numOfWashHandsDaily =mysqli_num_rows($result); 
+
+$sql = "SELECT * FROM hygiene_tbl where wash_hands='few-times-week' ";
+$result = mysqli_query($db, $sql);
+$numOfWashHandsFewTimesWeek = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where wash_hands='weekly' ";
+$result = mysqli_query($db, $sql);
+$numOfWashHandsWeekly = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where wash_hands='3-times-month' ";
+$result = mysqli_query($db, $sql);
+$numOfWashHands3TimesMonth =mysqli_num_rows($result); 
+
+$sql = "SELECT * FROM hygiene_tbl where wash_hands='never' ";
+$result = mysqli_query($db, $sql);
+$numOfWashHandsNever = mysqli_num_rows($result);
+
+
+// : Use Alcohol-based Sanitiser
+
+$sql = "SELECT * FROM hygiene_tbl where alcohol_based_sanitisers='throughout-the-day' ";
+$result = mysqli_query($db, $sql);
+$numOfUseSanitisersThroughDay = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where alcohol_based_sanitisers='daily' ";
+$result = mysqli_query($db, $sql);
+$numOfUseSanitisersDaily = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where alcohol_based_sanitisers='few-times-week' ";
+$result = mysqli_query($db, $sql);
+$numOfUseSanitisersFewTimesWeek = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where alcohol_based_sanitisers='weekly' ";
+$result = mysqli_query($db, $sql);
+$numOfUseSanitisersWeekly = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where alcohol_based_sanitisers='3-times-month' ";
+$result = mysqli_query($db, $sql);
+$numOfUseSanitisers3TimesMonth = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where alcohol_based_sanitisers='never' ";
+$result = mysqli_query($db, $sql);
+$numOfUseSanitisersNever = mysqli_num_rows($result);
+
+// : Avoid Touching eyes,nose,and mouth (face)
+
+$sql = "SELECT * FROM hygiene_tbl where avoid_touching='throughout-the-day' ";
+$result = mysqli_query($db, $sql);
+$numOfAvoidTouchingFaceThroughDay = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where avoid_touching='daily' ";
+$result = mysqli_query($db, $sql);
+$numOfAvoidTouchingFaceDaily = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where avoid_touching='few-times-week' ";
+$result = mysqli_query($db, $sql);
+$numOfAvoidTouchingFaceFewTimesWeek = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where avoid_touching='weekly' ";
+$result = mysqli_query($db, $sql);
+$numOfAvoidTouchingFaceWeekly = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where avoid_touching='3-times-month' ";
+$result = mysqli_query($db, $sql);
+$numOfAvoidTouchingFace3TimesMonth = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where avoid_touching='never' ";
+$result = mysqli_query($db, $sql);
+$numOfAvoidTouchingFaceNever = mysqli_num_rows($result);
+
+// : Increase the amount of fresh air
+
+$sql = "SELECT * FROM hygiene_tbl where fresh_air='throughout-the-day' ";
+$result = mysqli_query($db, $sql);
+$numOfFreshAirThroughDay = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where fresh_air='daily' ";
+$result = mysqli_query($db, $sql);
+$numOfFreshAirDaily = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where fresh_air='few-times-week' ";
+$result = mysqli_query($db, $sql);
+$numOfFreshAirFewTimesWeek = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where fresh_air='weekly' ";
+$result = mysqli_query($db, $sql);
+$numOfFreshAirWeekly = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where fresh_air='3-times-month' ";
+$result = mysqli_query($db, $sql);
+$numOfFreshAir3TimesMonth = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where fresh_air='never' ";
+$result = mysqli_query($db, $sql);
+$numOfFreshAirNever = mysqli_num_rows($result);
+
+// : Clean and disinfect surfaces you use (disinfect)
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_surfaces='throughout-the-day' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectSurfacesThroughDay = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_surfaces='daily' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectSurfacesDaily = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_surfaces='few-times-week' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectSurfacesFewTimesWeek = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_surfaces='weekly' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectSurfacesWeekly = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_surfaces='3-times-month' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectSurfaces3TimesMonth = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_surfaces='never' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectSurfacesNever = mysqli_num_rows($result);
+
+// : Clean and disinfect Object you use (disinfect)
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_objects='throughout-the-day' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectObjectsThroughDay = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_objects='daily' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectObjectsDaily = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_objects='few-times-week' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectObjectsFewTimesWeek = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_objects='weekly' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectObjectsWeekly = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_objects='3-times-month' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectObjects3TimesMonth = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where disinfect_objects='never' ";
+$result = mysqli_query($db, $sql);
+$numOfDisinfectObjectsNever = mysqli_num_rows($result);
+
+
+
+// : Practice Social Distancing
+
+$sql = "SELECT * FROM hygiene_tbl where social_distance='throughout-the-day' ";
+$result = mysqli_query($db, $sql);
+$numOfSocialDistanceThroughDay = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where social_distance='daily' ";
+$result = mysqli_query($db, $sql);
+$numOfSocialDistanceDaily = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where social_distance='few-times-week' ";
+$result = mysqli_query($db, $sql);
+$numOfSocialDistanceFewTimesWeek = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where social_distance='weekly' ";
+$result = mysqli_query($db, $sql);
+$numOfSocialDistanceWeekly = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where social_distance='3-times-month' ";
+$result = mysqli_query($db, $sql);
+$numOfSocialDistance3TimesMonth = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM hygiene_tbl where social_distance='never' ";
+$result = mysqli_query($db, $sql);
+$numOfSocialDistanceNever = mysqli_num_rows($result);
+
+// Module 6: (Attitudes to the Vaccine) roll out vaccine as quick as possible
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where quickly_as_possible='Strongly Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfQuicklyAsPossibleSAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where quickly_as_possible='Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfQuicklyAsPossibleAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where quickly_as_possible=' Neither Agree nor Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfQuicklyAsPossibleNutral = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where quickly_as_possible='Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfQuicklyAsPossibleDisagree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where quickly_as_possible='Strongly Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfQuicklyAsPossibleSDisagree = mysqli_num_rows($result);
+
+//prioritised Health workers
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_health_workers='Strongly Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseHWSAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_health_workers='Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseHWAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_health_workers=' Neither Agree nor Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseHWNutral = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_health_workers='Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseHWDisagree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_health_workers='Strongly Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseHWSDisagree = mysqli_num_rows($result);
+
+//Prioritise Teachers
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_teachers='Strongly Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseTeachersSAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_teachers='Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseTeachersAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_teachers=' Neither Agree nor Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseTeachersNutral = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_teachers='Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseTeachersDisagree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where prioritised_teachers='Strongly Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfPrioritiseTeachersSDisagree = mysqli_num_rows($result);
+
+// : Informed Enough
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where informed_enough='Strongly Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfInformedEnoughSAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where informed_enough='Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfInformedEnoughAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where informed_enough=' Neither Agree nor Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfInformedEnoughNutral = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where informed_enough='Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfInformedEnoughDisagree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where informed_enough='Strongly Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfInformedEnoughSDisagree = mysqli_num_rows($result);
+
+//Vaccine safe
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where vaccines_safe='Strongly Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfVaccineSafeSAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where vaccines_safe='Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfVaccineSafeAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where vaccines_safe=' Neither Agree nor Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfVaccineSafeNutral = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where vaccines_safe='Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfVaccineSafeDisagree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where vaccines_safe='Strongly Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfVaccineSafeSDisagree = mysqli_num_rows($result);
+
+//something to do with 5G
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where something_5g='Strongly Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfSomething5GSAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where something_5g='Agree' ";
+$result = mysqli_query($db, $sql);
+$numOfSomething5GAgree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where something_5g=' Neither Agree nor Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfSomething5GNutral = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where something_5g='Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfSomething5GDisagree = mysqli_num_rows($result);
+
+$sql = "SELECT * FROM vaccine_opinion_tbl where something_5g='Strongly Disagree' ";
+$result = mysqli_query($db, $sql);
+$numOfSomething5GSDisagree = mysqli_num_rows($result);
+
 
 ?>

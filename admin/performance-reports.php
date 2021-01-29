@@ -37,7 +37,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
       $header_province = "All"; 
     } 
 
-    if ($header_survey_numbers == '%'){
+    if ($header_survey_numbers == '0'){
       $header_survey_numbers = "All"; 
     }
 
@@ -66,6 +66,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                         <option  value="Western Cape">Western Cape</option>
                     </select>
                 </td>
+                <!--
                 <td>
                   <label for="net_structure" class="u-label" >Sector: </label>
                   <select class="u-grey-5 u-input u-input-rectangle" id="net_structure" name="net_structure" size="1" class="form-control unit">
@@ -90,6 +91,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                       <option value="LGBTIQ">LGBTIQ+</option>
                     </select>                
                 </td>
+                -->
                 <td>
                   <label for="number_of_surveys" class="u-label">Number of Surveys: </label>
                     <select class="u-grey-5 u-input u-input-rectangle" id="number_of_surveys" name="number_of_surveys" size="1" class="form-control unit">
@@ -122,7 +124,6 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
           <div class="card-header">
             <h5 class="card-category">Mobilisers Performance Report</h5>
             <h4 class="card-title">
-              Sector: <b><?php echo $header_sector ?></b>, <br>
               Province: <b><?php echo $header_province  ?></b>, <br>
               Number of Surveys: <b><?php echo $header_survey_numbers  ?></b>
             </h4>
@@ -150,7 +151,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                 <tbody>
 
         <?php
-            $sql="SELECT mobiliser_tbl.mobiliser_id as mob_id, mobiliser_tbl.first_name as first_name, mobiliser_tbl.surname as surname, mobiliser_tbl.net_structure as net_structure, mobiliser_tbl.province as province, mobiliser_tbl.municipality as municipality, mobiliser_tbl.cellnumber as cellnumber, count(summary_tbl.mobiliser_id) as no_of_surveys FROM summary_tbl INNER JOIN mobiliser_tbl ON summary_tbl.mobiliser_id=mobiliser_tbl.mobiliser_id WHERE mobiliser_tbl.net_structure LIKE '$sector' AND mobiliser_tbl.province LIKE '$mobiliser_province' group by summary_tbl.mobiliser_id HAVING no_of_surveys >= '$survey_numbers' ORDER BY no_of_surveys DESC";
+            $sql="SELECT mobiliser_tbl.mobiliser_id as mob_id, mobiliser_tbl.first_name as first_name, mobiliser_tbl.surname as surname, mobiliser_tbl.net_structure as net_structure, mobiliser_tbl.province as province, mobiliser_tbl.municipality as municipality, mobiliser_tbl.cellnumber as cellnumber, count(summary_tbl.mobiliser_id) as no_of_surveys FROM summary_tbl INNER JOIN mobiliser_tbl ON summary_tbl.mobiliser_id=mobiliser_tbl.mobiliser_id WHERE  mobiliser_tbl.province LIKE '$mobiliser_province' group by summary_tbl.mobiliser_id HAVING no_of_surveys >= '$survey_numbers' ORDER BY no_of_surveys DESC";
             $query=mysqli_query($db,$sql);
 
                 if(!mysqli_num_rows($query) > 0 )

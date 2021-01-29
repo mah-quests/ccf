@@ -158,7 +158,13 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
         </button>
         <button class="btn btn-secondary btn-block" onclick="window.location.href='public-facilities.php'">
           MODULE 3: Access to public facilities
-        </button>                       
+        </button> 
+        <button class="btn btn-secondary btn-block" onclick="window.location.href='hygiene.php#'">
+          MODULE 5: Hygiene
+        </button>
+        <button class="btn btn-secondary btn-block" onclick="window.location.href='attitude-to-vaccine.php#'">
+          MODULE 6: Attitudes to the Vaccine
+        </button>                        
 
 
   </div>

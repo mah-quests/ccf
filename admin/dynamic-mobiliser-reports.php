@@ -66,6 +66,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                         <option  value="Western Cape">Western Cape</option>
                     </select>
                 </td>
+                <!--
                 <td>
                   <label for="net_structure" class="u-label" >Sector: </label>
                   <select class="u-grey-5 u-input u-input-rectangle" id="net_structure" name="net_structure" size="1" class="form-control unit">
@@ -90,6 +91,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                       <option value="LGBTIQ">LGBTIQ+</option>
                     </select>                
                 </td>
+                -->
                 <td>
                   <label for="race" class="u-label">Race: </label>
                     <select class="u-grey-5 u-input u-input-rectangle" id="race" name="race" size="1" class="form-control unit">
@@ -125,7 +127,6 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
             </h5>
 
             <h4 class="card-title"> 
-              Sector: <b><?php echo $header_sector ?></b>, <br>
               Province: <b><?php echo $header_province  ?></b>, <br>
               Race: <b><?php echo $header_race  ?></b>
             </h4>
@@ -155,7 +156,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
 
 
         <?php
-            $sql="SELECT * FROM mobiliser_tbl WHERE net_structure LIKE '$sector' AND province LIKE '$mobiliser_province' AND race LIKE '$select_race' order by net_structure asc";
+            $sql="SELECT * FROM mobiliser_tbl WHERE province LIKE '$mobiliser_province' AND race LIKE '$select_race' order by net_structure asc";
             $query=mysqli_query($db,$sql);
 
                 if(!mysqli_num_rows($query) > 0 )

@@ -7,6 +7,7 @@
         function drawHabbitsTooDifficult() {
           var data = google.visualization.arrayToDataTable([
             ["Difficult Behaviours ", "Numbers", { role: "style" } ],
+            ["Students",<?php echo $numOfStudent ?>,"#943b6a"],
             ["Employed, working 1-20 hours per week", <?php echo $numOfEmployed1to20 ?>, "#63008d"],
             ["Employed, working 21 – 40+ or more hours per week", <?php echo $numOfEmployed21to40 ?>, "#5600ce"],
             ["Not employed, looking for work", <?php echo $numOfUnEmployedLooking ?>, "#717077"],

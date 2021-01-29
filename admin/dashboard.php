@@ -63,8 +63,8 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
       <div class="col-lg-4 col-md-6">
         <div class="card card-chart">
           <div class="card-header"  align="center">
-            <h5 class="card-category"># Sector Represented</h5><br>
-            <h1 class="card-title" style="font-size: 50px">18</h1>
+            <h5 class="card-category"># Mobilisers Across Provinces</h5><br>
+            <br><br><br>
           </div>
           <div class="card-body">
             <div class="chart-area">

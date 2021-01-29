@@ -658,7 +658,158 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                     }   
                 }
 ?>
+     <?php
+          $sql="SELECT * FROM hygiene_tbl where unique_code='$unique_code' "; //vkUaf1bW6R  $unique_code
+          $query=mysqli_query($db,$sql);
 
+              if(!mysqli_num_rows($query) > 0 )
+              {
+                  echo '<td colspan="7">
+                          <center>
+                              No User-Data!
+                          </center>
+                      </td>';
+              } else {               
+                  while($rows=mysqli_fetch_array($query)) {
+          ?>
+
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title"> Module 5: Hygiene</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                    <div class="row" >
+
+                      <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                      Regularly wash hands with soap and water for at least 20 seconds
+                      </div>
+                      <div class="col-md-6">: <?php echo $rows['wash_hands']; ?> </div>
+                      <div class="col-md-6" style="color: #F2A590; font-size: 15px" align="right">
+                      Use alcohol-based hand sanitisers when you can’t use soap and water
+                      </div>
+                      <div class="col-md-6">
+                        : <?php echo $rows['alcohol_based_sanitisers']; ?>
+                      </div>
+                      <div class="col-md-6" style="color: #F2A590; font-size: 15px" align="right">
+                      Avoid touching your eyes, nose and mouth
+                      </div>
+                      <div class="col-md-6">
+                        : <?php echo $rows['avoid_touching']; ?>
+                      </div>
+                      <div class="col-md-6" style="color: #F2A590; font-size: 15px" align="right">
+                      Clean and disinfect surfaces you use often such as tabletops, desks and doorknobs
+                      </div>
+                      <div class="col-md-6">
+                        : <?php echo $rows['disinfect_surfaces']; ?>
+                      </div>
+                      <div class="col-md-6" style="color: #F2A590; font-size: 15px" align="right">
+                      Clean and disinfect objects you use often such as cellphones, keys, wallets and bus/train cards
+                      </div>
+                      <div class="col-md-6">
+                        : <?php echo $rows['disinfect_objects']; ?>
+                      </div>
+                      <div class="col-md-6" style="color: #F2A590; font-size: 15px" align="right">
+                      Increase the amount of fresh air by opening windows
+                      </div>
+                      <div class="col-md-6">
+                        : <?php echo $rows['fresh_air']; ?>
+                      </div>
+                      <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                      Keep a distance of 1.5m from people outside of my household all the time
+                      </div>
+                      <div class="col-md-6">
+                        : <?php echo $rows['social_distance']; ?>
+                      </div>
+                                           
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+<?php 
+                    }   
+                }
+
+
+          $sql="SELECT * FROM vaccine_opinion_tbl where unique_code='$unique_code' ";//waW7Yp8ieB $unique_code
+          $query=mysqli_query($db,$sql);
+
+              if(!mysqli_num_rows($query) > 0 )
+              {
+                  echo '<td colspan="7">
+                          <center>
+                              No User-Data!
+                          </center>
+                      </td>';
+              } else {               
+                  while($rows=mysqli_fetch_array($query)) {
+
+?>
+
+          <div class="col-md-12">
+            <div class="card card-plain">
+              <div class="card-header">
+                <h4 class="card-title">Module 6: Attitudes to the Vaccine</h4>
+                <p class="category"></p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+
+                  <div class="row" >
+                    <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                    South Africa should roll out vaccines to the population as quickly as possible
+                    </div>
+                    <div class="col-md-6" class="divider">
+                      : <?php echo $rows['quickly_as_possible']; ?>
+                    </div>
+                    <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                    I think that community health workers should be included as essential workers to be prioritised for the vaccine roll-out
+                    </div>
+                    <div class="col-md-6">
+                      : <?php echo $rows['prioritised_health_workers']; ?>
+                    </div>
+                    <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                    I think that teachers should be included as essential workers to be prioritised for the vaccine roll-out
+                    </div>
+                    <div class="col-md-6">
+                      : <?php echo $rows['prioritised_teachers'] ;?>
+                    </div>
+                    <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                    I feel like I am informed enough and feel comfortable to take the vaccine 
+                    </div>
+                    <div class="col-md-6">
+                      : <?php echo $rows['informed_enough']; ?>
+                    </div>
+                    <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                    The vaccines that have been approved are safe for people to take
+                    </div>
+                    <div class="col-md-6">
+                      : <?php echo $rows['vaccines_safe']; ?>
+                    </div>
+                    <div class="col-md-6" style="color: #F2A590; font-size: 20px">
+                    COVID19 has something to do with 5G
+                    </div>
+                    <div class="col-md-6">
+                      : <?php echo $rows['something_5g']; ?>
+                    </div> 
+                                                
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<?php 
+                    }   
+                }
+?>
         <button class="btn btn-secondary btn-block" onclick="goBack()">
           Back
         </button>

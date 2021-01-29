@@ -7,7 +7,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
   <title>
-    Community Constituency Front Admin Login
+    Communities Matter Admin Login
   </title>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
@@ -171,7 +171,7 @@ body {
     <div class="card card-login mx-auto text-center bg-dark">
         <div class="card-header mx-auto bg-dark">
             <span> <img src="assets/img/comlogo.png" class="w-75" alt="Logo"> </span><br/><br>
-                        <span class="logo_title mt-5">Community Constituency Front (CCF), Admin Page</span>
+                        <span class="logo_title mt-5">Communities Matter, Admin Page</span>
 
         </div>
         <div class="card-body">

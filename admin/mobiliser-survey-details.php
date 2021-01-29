@@ -13,8 +13,8 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
 
   include_once "includes/header.php";
 
-  $mobiliser_id = $_GET[mob_id];
-  $survey_numbers = $_GET[num];
+  $mobiliser_id = $_GET['mob_id'];
+  $survey_numbers = $_GET['num'];
 
   $stmt = $db->prepare('SELECT first_name, surname, cellnumber, net_structure FROM mobiliser_tbl WHERE mobiliser_id = ?');
 

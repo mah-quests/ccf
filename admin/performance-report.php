@@ -51,6 +51,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                         <option  value="Western Cape">Western Cape</option>
                     </select>
                 </td>
+                <!--
                 <td>
                   <label for="net_structure" class="u-label" >Sector: </label>
                   <select class="u-grey-5 u-input u-input-rectangle" id="net_structure" name="net_structure" size="1" class="form-control unit">
@@ -75,6 +76,7 @@ if ($_SESSION['loggedin']  != TRUE)   //if user is not login redirected baack to
                       <option value="LGBTIQ">LGBTIQ+</option>
                     </select>                
                 </td>
+                -->
                 <td>
                   <label for="number_of_surveys" class="u-label">Number of Surveys: </label>
                     <select class="u-grey-5 u-input u-input-rectangle" id="number_of_surveys" name="number_of_surveys" size="1" class="form-control unit">
